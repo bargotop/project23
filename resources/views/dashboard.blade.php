@@ -17,6 +17,16 @@
                 <button class="bg-blue-500 hover:bg-blue-700 active:bg-blue-900 py-2 px-4 rounded mt-3" id="addDirectionBtn">Добавить ещё направление</button>
                 <button class="bg-green-500 hover:bg-green-700 active:bg-green-900 py-2 px-4 rounded mt-3">Создать факультет</button>
             </div>
+            <h1>Faculties</h1>
+        
+                @foreach ($faculties as $faculty)
+                    <h2>{{ $faculty->name }}</h2>
+                    <ul>
+                        @foreach ($faculty->departments as $department)
+                            <li>{{ $department->name }}</li>
+                        @endforeach
+                    </ul>
+                @endforeach
             <script>
                 $('#addDirectionBtn').click(function() {
                     $('#createBtn').before(`
@@ -37,4 +47,5 @@
             </script>
         </div>
     </div>
+
 </x-app-layout>
