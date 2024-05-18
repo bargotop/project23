@@ -18,21 +18,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // Dashboard
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Маршрут для создания факультета
-    Route::post('/faculty', [DashboardController::class, 'createFaculty'])->name('createFaculty');
+        // Faculties
+        Route::prefix('faculties')->group(function () {
+            Route::post('/', [DashboardController::class, 'createFaculty'])->name('createFaculty');
+            Route::delete('/{facultyId}', [DashboardController::class, 'deleteFaculty'])->name('deleteFaculty');
+            Route::get('/', [DashboardController::class, 'getFaculties'])->name('getFaculties');
 
-    // Маршрут для создания направления внутри факультета
-    Route::post('/faculty/{facultyId}/department', [DashboardController::class, 'createDepartment'])->name('createDepartment');
+            // Departments
+            Route::prefix('departments')->group(function () {
+                Route::post('/', [DashboardController::class, 'createDepartment'])->name('createDepartment');
+                Route::delete('/{departmentId}', [DashboardController::class, 'deleteDepartment'])->name('deleteDepartment');
+                Route::get('/{facultyId}', [DashboardController::class, 'getDepartments'])->name('getDepartments');
+            });
+        });
 
-    // Маршрут для просмотра всех факультетов
-    Route::get('/faculties', [DashboardController::class, 'getFaculties'])->name('getFaculties');
-
-    // Маршрут для просмотра всех направлений внутри определенного факультета
-    Route::get('/faculty/{facultyId}/departments', [DashboardController::class, 'getDepartments'])->name('getDepartments');
+        // Faculty with Department
+        Route::post('/faculty-with-department', [DashboardController::class, 'createFacultyWithDepartment'])->name('createFacultyWithDepartment');
+    });
 });
 
 require __DIR__.'/auth.php';
