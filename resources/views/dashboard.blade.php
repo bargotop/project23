@@ -9,11 +9,9 @@
                     </div>
                     <input class="w-full rounded-md pl-12 placeholder:text-gray-400" placeholder="Название факультета" id="name" name="name">
                 </div>
-                <div class="relative mt-3 shadow-sm" id="directionInput">
-                    <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
-                        <img src="img/import-contacts.svg">
-                    </div>
-                    <input class="w-full rounded-md pl-12 placeholder:text-gray-400" placeholder="Название направления">
+                <div class="flex mt-3 ms-3">
+                    <img src="img/import-contacts.svg">
+                    <input class="w-full rounded-md ms-3 placeholder:text-gray-400" id="directionInput" placeholder="Название направления">
                 </div>
                 <div class="flex justify-between text-white" id="createBtn">
                     <button class="bg-blue-500 hover:bg-blue-700 active:bg-blue-900 py-2 px-4 rounded mt-3" id="addDirectionBtn" type="button">Добавить ещё направление</button>
@@ -29,7 +27,7 @@
                 <div class="my-3 p-4 border rounded-lg shadow">
                     <div class="flex justify-between">
                         <div class="font-semibold text-gray-900 md:text-xl">{{ $faculty->name }}</div>
-                        <img class="delete-direction cursor-pointer px-2 mt-3 py-auto" src="img/delete.svg">
+                        <img class="cursor-pointer" src="img/delete.svg">
                     </div>
                     <div class="space-y-3">
                         @foreach ($faculty->departments as $department)
@@ -44,11 +42,9 @@
         $('#addDirectionBtn').click(function() {
             $('#createBtn').before(`
                 <div class="flex">
-                    <div class="relative shadow-sm w-full mt-3">
-                        <div class="pointer-events-none absolute inset-y-0 flex items-center left-3">
-                            <img src="img/import-contacts.svg">
-                        </div>
-                        <input class="w-full rounded-md pl-12 placeholder:text-gray-400" placeholder="Название направления">
+                    <div class="w-full flex mt-3 ms-3">
+                        <img src="img/import-contacts.svg">
+                        <input class="w-full rounded-md ms-3 placeholder:text-gray-400" id="directionInput" placeholder="Название направления">
                     </div>
                     <img class="delete-direction cursor-pointer px-2 mt-3 py-auto" src="img/delete.svg">
                 </div>
