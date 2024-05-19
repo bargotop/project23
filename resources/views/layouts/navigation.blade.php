@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img class="cursor-pointer" src="img/logo.png" width="40px" onclick="location='{{ route('dashboard') }}'">
+                    <img class="cursor-pointer" src="/img/logo.png" width="40px" onclick="location='{{ route('dashboard') }}'">
                 </div>
 
                 <!-- Navigation Links -->
