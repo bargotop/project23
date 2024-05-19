@@ -1,7 +1,7 @@
 <x-app-layout>
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="max-w-7xl mx-auto sm:px-6 font-bold">
-        <form action="{{ route('faculties.with-department.create') }}" method="POST">
+        <form id="createFacultyForm" action="{{ route('faculties.create') }}" method="POST">
             @csrf
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-10 p-5">
                 <div class="relative shadow-sm">
@@ -34,7 +34,7 @@
                             <div class="p-5 rounded-b-xl bg-white space-y-3">
                                 @foreach ($faculty->departments as $department)
                                     <div class="flex items-center justify-between department">
-                                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('departments.groups-and-students.show', ['departmentId' => $department->id]) }}'">{{ $department->name }}</div>
+                                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('departments.show', ['departmentId' => $department->id]) }}'">{{ $department->name }}</div>
                                         <img class="cursor-pointer ms-2 deleteDepartmentBtn" src="/img/delete.svg" data-modal-toggle="deleteDepartment" data-id="{{ $department->id }}" data-delete-url="{{ route('departments.delete', ['departmentId' => $department->id]) }}">
                                     </div>
                                 @endforeach
@@ -115,6 +115,24 @@
             $('.deleteDepartmentConfirmBtn').off('click');
             $('.deleteDepartmentConfirmBtn').on('click', function() {
                 deleteDepartment(btn, id, deleteUrl)
+            });
+        });
+
+        $('#createFacultyForm').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: $(this).serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
             });
         });
     </script>

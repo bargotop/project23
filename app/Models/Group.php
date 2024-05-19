@@ -20,21 +20,21 @@ class Group extends Model
     {
         return $this->hasMany(Student::class);
     }
+    
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'group_subject');
+    }
 
     public function delete()
     {
-        // удаляется cascade
-        // foreach ($this->students as $student) {
-        //     $student->delete();
-        // }
+        $department = $this->department;
+        return parent::delete();
 
         // Проверяем, остались ли другие группы в отделении
-        $department = $this->department;
-        parent::delete();
+        // Не удаляем направление, даже если не осталось групп
         // if ($department && $department->groups()->count() === 0) {
         //     $department->delete();
         // }
-
-        return true;
     }
 }

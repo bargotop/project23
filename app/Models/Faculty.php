@@ -15,15 +15,4 @@ class Faculty extends Model
     {
         return $this->hasMany(Department::class);
     }
-
-    public function delete()
-    {
-        // удаляется cascade
-        // foreach ($this->departments as $department) {
-        //     $department->delete();
-        // }
-
-        // Затем удаляем сам факультет
-        return parent::delete();
-    }
 }

@@ -15,4 +15,9 @@ class Subject extends Model
     {
         return $this->belongsToMany(Department::class);
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_subject');
+    }
 }

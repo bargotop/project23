@@ -28,14 +28,10 @@ class Department extends Model
 
     public function delete()
     {
-        // удаляется cascade
-        // foreach ($this->groups as $group) {
-        //     $group->delete();
-        // }
-
-        // Проверяем, остались ли другие отделения в факультете
         $faculty = $this->faculty;
         parent::delete();
+
+        // Проверяем, остались ли другие отделения в факультете
         if ($faculty && $faculty->departments()->count() === 0) {
             $faculty->delete();
         }

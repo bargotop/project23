@@ -14,11 +14,17 @@ class Student extends Model
         return $this->belongsTo(Group::class);
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
     public function delete()
     {
-        // Проверяем, остались ли другие студенты в группе
         $group = $this->group;
         parent::delete();
+
+        // Проверяем, остались ли другие студенты в группе
         if ($group && $group->students()->count() === 0) {
             $group->delete();
         }
