@@ -25,4 +25,21 @@ class Department extends Model
     {
         return $this->belongsToMany(Subject::class);
     }
+
+    public function delete()
+    {
+        // удаляется cascade
+        // foreach ($this->groups as $group) {
+        //     $group->delete();
+        // }
+
+        // Проверяем, остались ли другие отделения в факультете
+        $faculty = $this->faculty;
+        parent::delete();
+        if ($faculty && $faculty->departments()->count() === 0) {
+            $faculty->delete();
+        }
+
+        return true;
+    }
 }

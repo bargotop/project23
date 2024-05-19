@@ -13,4 +13,16 @@ class Student extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function delete()
+    {
+        // Проверяем, остались ли другие студенты в группе
+        $group = $this->group;
+        parent::delete();
+        if ($group && $group->students()->count() === 0) {
+            $group->delete();
+        }
+
+        return true;
+    }
 }
