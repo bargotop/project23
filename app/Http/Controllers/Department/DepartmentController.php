@@ -45,7 +45,7 @@ class DepartmentController extends Controller
     {
         $department = Department::with('groups.students')->orderBy('created_at', 'desc')->findOrFail($departmentId);
 
-        return view('departments.index', compact('department'));
+        return view('department', compact('department'));
     }
 
     public function deleteGroup(int $groupId): JsonResponse
