@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\Department;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -14,8 +15,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $faculties = Faculty::with('departments')->get();
-        Log::debug(json_encode($faculties));
+        $faculties = Faculty::with('departments')->orderBy('created_at', 'desc')->get();
 
         return view('dashboard', compact('faculties'));
     }
@@ -41,12 +41,13 @@ class DashboardController extends Controller
         return redirect()->route('dashboard')->with('success', 'Faculty created successfully');
     }
 
-    public function deleteFaculty(int $facultyId): RedirectResponse
+    public function deleteFaculty(int $facultyId): JsonResponse
     {
         $faculty = Faculty::findOrFail($facultyId);
         $faculty->delete();
 
-        return redirect()->route('dashboard')->with('success', 'Faculty deleted successfully');
+        return response()->json(['success' => true]);
+        // return redirect()->route('dashboard')->with('success', 'Faculty deleted successfully');
     }
 
     public function createFacultyWithDepartment(Request $request): RedirectResponse
@@ -56,18 +57,20 @@ class DashboardController extends Controller
             'department_name.*' => 'required|string|max:255',
         ]);
 
-        $faculty = Faculty::create([
-            'name' => $request->faculty_name,
-            'author_id' => auth()->id(),
-        ]);
-
-        foreach ($request->department_name as $departmentName) {
-            Department::create([
-                'name' => $departmentName,
-                'faculty_id' => $faculty->id,
+        // foreach (range(1, 30) as $number) {
+            $faculty = Faculty::create([
+                'name' => $request->faculty_name,
                 'author_id' => auth()->id(),
             ]);
-        }
+    
+            foreach ($request->department_name as $departmentName) {
+                Department::create([
+                    'name' => $departmentName,
+                    'faculty_id' => $faculty->id,
+                    'author_id' => auth()->id(),
+                ]);
+            }
+        // }
 
         return redirect()->route('dashboard')->with('success', 'Faculty with departments created successfully');
     }
@@ -96,11 +99,12 @@ class DashboardController extends Controller
         return redirect()->route('dashboard')->with('success', 'Department created successfully');
     }
 
-    public function deleteDepartment(int $departmentId): RedirectResponse
+    public function deleteDepartment(int $departmentId): JsonResponse
     {
         $department = Department::findOrFail($departmentId);
         $department->delete();
 
-        return redirect()->route('dashboard')->with('success', 'Department deleted successfully');
+        return response()->json(['success' => true]);
+        // return redirect()->route('dashboard')->with('success', 'Department deleted successfully');
     }
 }

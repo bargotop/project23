@@ -1,4 +1,5 @@
 <x-app-layout>
+<meta name="csrf-token" content="{{ csrf_token() }}">
     <form action="{{ route('createFacultyWithDepartment') }}" method="POST">
         @csrf
         <div class="max-w-7xl mx-auto sm:px-6 pt-10 font-bold">
@@ -28,21 +29,14 @@
                 <div class="my-3 p-4 border rounded-lg shadow">
                     <div class="flex justify-between">
                         <div class="font-semibold text-gray-900 md:text-xl">{{ $loop->iteration }}) {{ $faculty->name }}</div>
-                        <form id="deleteFacultyForm{{ $faculty->id }}" action="{{ route('deleteFaculty', ['facultyId' => $faculty->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                        <img class="cursor-pointer" src="img/delete.svg" onclick="deleteFaculty({{ $faculty->id }})">
+                        <img class="cursor-pointer deleteFacultyBtn" data-faculty-id="{{ $faculty->id }}" data-delete-url="{{ route('deleteFaculty', ['facultyId' => $faculty->id]) }}" src="img/delete.svg">
+
                     </div>
                     <div class="space-y-3">
                         @foreach ($faculty->departments as $department)
                         <div class="flex justify-between items-center">
                             <div class="p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='www.google.com'">{{ $department->name }}</div>
-                            <form id="deleteDepartmentForm{{ $department->id }}" action="{{ route('deleteDepartment', ['departmentId' => $department->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-                            <img class="cursor-pointer" src="img/delete.svg" onclick="deleteDepartment({{ $department->id }})">
+                            <img class="cursor-pointer deleteDepartmentBtn" data-department-id="{{ $department->id }}" data-delete-url="{{ route('deleteDepartment', ['departmentId' => $department->id]) }}" src="img/delete.svg">
                         </div>
                         @endforeach
                     </div>
@@ -66,14 +60,47 @@
             $(this).closest('.flex').remove();
         });
 
-        function deleteFaculty(facultyId) {
-            const form = document.getElementById('deleteFacultyForm' + facultyId);
-            form.submit();
-        }
+        $(document).ready(function() {
+            $('.deleteFacultyBtn').on('click', function() {
+                const facultyId = $(this).data('faculty-id');
+                const deleteUrl = $(this).data('delete-url');
+                // if (confirm('Are you sure you want to delete this faculty?')) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            location.reload(); // Перезагрузка страницы после успешного удаления
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                // }
+            });
 
-        function deleteDepartment(departmentId) {
-            const form = document.getElementById('deleteDepartmentForm' + departmentId);
-            form.submit();
-        }
+            $('.deleteDepartmentBtn').on('click', function() {
+                const departmentId = $(this).data('department-id');
+                const deleteUrl = $(this).data('delete-url');
+                // if (confirm('Are you sure you want to delete this department?')) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            location.reload(); // Перезагрузка страницы после успешного удаления
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                // }
+            });
+        });
     </script>
+    
 </x-app-layout>
