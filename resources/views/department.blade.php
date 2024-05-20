@@ -10,10 +10,12 @@
                         <img src="/img/group.svg">
                     </div>
                     <input class="w-full rounded-md pl-12 placeholder:text-gray-400" placeholder="Название группы" id="group_name" name="group_name">
+                    <span class="text-red-500" id="group_name_error"></span>
                 </div>
                 <div class="flex mt-3 ms-3">
                     <img src="/img/person.svg">
                     <input class="w-full rounded-md ms-3 placeholder:text-gray-400" id="studentInput" placeholder="Ф. И. О. студента" name="student_name[]">
+                    <span class="text-red-500" id="student_name"></span>
                 </div>
                 <div class="flex justify-between text-white" id="createBtn">
                     <button class="bg-blue-500 hover:bg-blue-700 active:bg-blue-900 py-2 px-4 rounded mt-3" id="addStudentBtn" type="button">Добавить ещё студента</button>
@@ -65,6 +67,20 @@
         $(document).on('click', '.deleteStudent', function() {
             $(this).closest('.flex').remove();
         });
+
+        function handleValidationErrors(errors) {
+            // Clear all previous errors
+            $('input').removeClass('border-red-500');
+            $('.text-red-500').text('');
+
+            // Set new errors
+            $.each(errors, function(field, messages) {
+                var input = $('[name="' + field + '"]');
+                input.addClass('border-red-500');
+                input.next('.text-red-500').text(messages[0]);
+            });
+        }
+
         function deleteGroup(btn, id, deleteUrl) {
             $.ajax({
                 url: deleteUrl,
@@ -134,6 +150,7 @@
                 },
                 error: function(xhr, status, error) {
                     console.error('Error:', error);
+                    handleValidationErrors(xhr.responseJSON.errors);
                 }
             });
         });

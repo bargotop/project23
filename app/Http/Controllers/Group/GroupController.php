@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Group;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,11 @@ class GroupController extends Controller
             $query->orderBy('created_at', 'desc');
         }])->findOrFail($groupId);
 
-        return view('group', compact('group'));
+        $subjects = Subject::all();
+
+        $users = User::all();
+
+        return view('group', compact('group', 'subjects', 'users'));
     }
 
     public function createGroup(Request $request, int $departmentId): JsonResponse
@@ -69,6 +75,7 @@ class GroupController extends Controller
         $group = Group::findOrFail($groupId);
         $group->subjects()->sync($request->subject_ids);
 
-        return redirect()->back()->with('success', 'Subjects assigned to group successfully');
+        return response()->json(['success' => true]);
+        // return redirect()->back()->with('success', 'Subjects assigned to group successfully');
     }
 }
