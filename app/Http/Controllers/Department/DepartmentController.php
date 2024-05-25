@@ -27,13 +27,13 @@ class DepartmentController extends Controller
             'department_name' => 'required|string|max:255',
         ]);
 
-        foreach ($request->department_name as $departmentName) {
+        // foreach ($request->department_name as $departmentName) {
             Department::create([
-                'name' => $departmentName,
+                'name' => $request->department_name,
                 'faculty_id' => $facultyId,
                 'author_id' => auth()->id(),
             ]);
-        }
+        // }
 
         return response()->json(['success' => true]);
     }
