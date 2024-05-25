@@ -23,8 +23,8 @@ class DepartmentController extends Controller
     public function createDepartment(Request $request, int $facultyId): JsonResponse
     {
         $request->validate([
-            'department_name' => 'array',
-            'department_name.*' => 'required|string|max:255',
+            // 'department_name' => 'array',
+            'department_name' => 'required|string|max:255',
         ]);
 
         foreach ($request->department_name as $departmentName) {
