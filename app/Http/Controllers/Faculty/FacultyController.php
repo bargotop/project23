@@ -36,8 +36,8 @@ class FacultyController extends Controller
     {
         $request->validate([
             'faculty_name' => 'required|string|max:255',
-            'department_name' => 'array',
-            'department_name.*' => 'nullable|string|max:255',
+            // 'department_name' => 'array',
+            // 'department_name.*' => 'nullable|string|max:255',
         ]);
 
         $faculty = Faculty::create([
@@ -45,16 +45,16 @@ class FacultyController extends Controller
             'author_id' => auth()->id(),
         ]);
 
-        foreach ($request->department_name as $departmentName) {
-            if (empty($departmentName)) {
-                continue;
-            }
-            Department::create([
-                'name' => $departmentName,
-                'faculty_id' => $faculty->id,
-                'author_id' => auth()->id(),
-            ]);
-        }
+        // foreach ($request->department_name as $departmentName) {
+        //     if (empty($departmentName)) {
+        //         continue;
+        //     }
+        //     Department::create([
+        //         'name' => $departmentName,
+        //         'faculty_id' => $faculty->id,
+        //         'author_id' => auth()->id(),
+        //     ]);
+        // }
 
         return response()->json(['success' => true]);
     }
