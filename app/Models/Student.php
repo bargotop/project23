@@ -25,9 +25,10 @@ class Student extends Model
         parent::delete();
 
         // Проверяем, остались ли другие студенты в группе
-        if ($group && $group->students()->count() === 0) {
-            $group->delete();
-        }
+        // Не удалять
+        // if ($group && $group->students()->count() === 0) {
+            // $group->delete();
+        // }
 
         return true;
     }

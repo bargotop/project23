@@ -32,9 +32,10 @@ class Department extends Model
         parent::delete();
 
         // Проверяем, остались ли другие отделения в факультете
-        if ($faculty && $faculty->departments()->count() === 0) {
-            $faculty->delete();
-        }
+        // Удалять не надо
+        // if ($faculty && $faculty->departments()->count() === 0) {
+        //     $faculty->delete();
+        // }
 
         return true;
     }
