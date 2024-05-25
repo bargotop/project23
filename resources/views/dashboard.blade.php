@@ -27,7 +27,6 @@
             </div>
         </div>
         @include("pop-ups.deleteFaculty")
-        @include("pop-ups.deleteDepartment")
     </div>
     <script>
         function deleteFaculty(btn, id, deleteUrl) {
