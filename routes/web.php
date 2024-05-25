@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Subject\SubjectController;
+use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,6 +61,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('subjects')->group(function () {
         Route::post('/{groupId}', [SubjectController::class, 'createSubject'])->name('subjects.create');
         Route::delete('/{id}', [SubjectController::class, 'deleteSubject'])->name('subjects.delete');
+    });
+
+
+    // Teacher
+    Route::prefix('teacher')->group(function () {
+        Route::get('/', [TeacherController::class, 'index'])->name('teacher.index');
     });
 
     // Attendance
