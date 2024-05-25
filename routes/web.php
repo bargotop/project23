@@ -49,7 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{id}', [GroupController::class, 'show'])->name('groups.show');
         Route::post('/{departmentId}', [GroupController::class, 'createGroup'])->name('groups.create');
         Route::delete('/{id}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
-        Route::post('/{groupId}/assign-subjects', [GroupController::class, 'assignSubjectsToGroup'])->name('groups.assignSubjects');
+        Route::get('/{id}/subjects', [GroupController::class, 'getGroupSubjects'])->name('groups.subjects');
+        Route::post('/{id}/assign-subjects', [GroupController::class, 'assignSubjectsToGroup'])->name('groups.assignSubjects');
     });
 
     // Students

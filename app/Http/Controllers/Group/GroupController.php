@@ -41,22 +41,29 @@ class GroupController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function deleteGroup(int $groupId): JsonResponse
+    public function deleteGroup(int $id): JsonResponse
     {
-        $group = Group::findOrFail($groupId);
+        $group = Group::findOrFail($id);
         $group->delete();
 
         return response()->json(['success' => true]);
     }
 
-    public function assignSubjectsToGroup(Request $request, $groupId)
+    public function getGroupSubjects(Request $request, int $id)
+    {
+        $group = Group::with('subjects')->findOrFail($id);
+
+        return response()->json(['data' => $group]);
+    }
+
+    public function assignSubjectsToGroup(Request $request, $id)
     {
         $request->validate([
             'subject_ids' => 'required|array',
             'subject_ids.*' => 'exists:subjects,id',
         ]);
 
-        $group = Group::findOrFail($groupId);
+        $group = Group::findOrFail($id);
         $group->subjects()->sync($request->subject_ids);
 
         return response()->json(['success' => true]);
