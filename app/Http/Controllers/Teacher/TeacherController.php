@@ -11,6 +11,6 @@ class TeacherController extends Controller
 {
     public function index(Request $request)
     {
-        return view('techer.teacher');
+        return view('teacher.teacher');
     }
 }
