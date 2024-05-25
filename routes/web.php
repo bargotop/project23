@@ -29,7 +29,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Faculties
     Route::prefix('faculties')->group(function () {
-        Route::get('/', [FacultyController::class, 'getFaculties'])->name('faculties.show');
+        Route::get('/{id}', [FacultyController::class, 'show'])->name('faculties.show');
+        Route::get('/', [FacultyController::class, 'getFaculties'])->name('faculties.index');
         Route::post('/', [FacultyController::class, 'createFaculty'])->name('faculties.create');
         Route::delete('/{id}', [FacultyController::class, 'deleteFaculty'])->name('faculties.delete');
     });

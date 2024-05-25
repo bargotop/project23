@@ -10,6 +10,15 @@ use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
+    public function show($id)
+    {
+        $faculty = Faculty::with(['departments' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->findOrFail($id);
+
+        return view('faculty', compact('faculty'));
+    }
+
     public function index()
     {
         $faculties = Faculty::with('departments')->orderBy('created_at', 'desc')->get();
