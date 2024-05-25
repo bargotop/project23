@@ -21,8 +21,8 @@
             <div class="p-5 rounded-xl bg-white space-y-3">
                 @foreach ($department->groups as $group)
                     <div class="flex items-center justify-between">
-                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('groups.show', ['groupId' => $group->id]) }}'">{{ $group->name }}</div>
-                        <img class="cursor-pointer ms-2 deleteGroupBtn" src="/img/delete.svg" data-modal-toggle="deleteGroup" data-group-id="{{ $group->id }}" data-delete-url="{{ route('groups.delete', ['groupId' => $group->id]) }}">
+                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('groups.show', ['id' => $group->id]) }}'">{{ $group->name }}</div>
+                        <img class="cursor-pointer ms-2 deleteGroupBtn" src="/img/delete.svg" data-modal-toggle="deleteGroup" data-group-id="{{ $group->id }}" data-delete-url="{{ route('groups.delete', ['id' => $group->id]) }}">
                     </div>
                 @endforeach
             </div>

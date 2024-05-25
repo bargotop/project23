@@ -18,6 +18,6 @@ class Subject extends Model
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class, 'group_subject')->withTimestamps();
+        return $this->belongsToMany(Group::class, 'group_subject', 'subject_id', 'group_id')->withTimestamps();
     }
 }

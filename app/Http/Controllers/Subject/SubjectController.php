@@ -7,13 +7,14 @@ use App\Models\GroupSubject;
 use App\Models\Subject;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SubjectController extends Controller
 {
-    public function createSubject(Request $request, ?int $groupId): JsonResponse
+    public function createSubject(Request $request, int $groupId): JsonResponse
     {
         $request->validate([
-            'group_id' => 'nullable|exists:groups,id',
+            // 'group_id' => 'nullable|exists:groups,id',
             'subject_name' => 'required|string|max:255',
         ]);
 
@@ -22,20 +23,18 @@ class SubjectController extends Controller
             'author_id' => auth()->id(),
         ]);
 
-        if (!empty($request->group_id)) {
-            GroupSubject::create([
-                'group_id' => $request->group_id,
-                'subject_id' => $subject->id,
-                'author_id' => auth()->id(),
-            ]);
-        }
+        GroupSubject::create([
+            'group_id' => $groupId,
+            'subject_id' => $subject->id,
+            'author_id' => auth()->id(),
+        ]);
 
         return response()->json(['success' => true]);
     }
 
-    public function deleteSubject(int $subjectId): JsonResponse
+    public function deleteSubject(int $id): JsonResponse
     {
-        $subject = Subject::findOrFail($subjectId);
+        $subject = Subject::findOrFail($id);
         $subject->delete();
 
         return response()->json(['success' => true]);

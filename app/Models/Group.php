@@ -23,7 +23,7 @@ class Group extends Model
     
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'group_subject')->withTimestamps();
+        return $this->belongsToMany(Subject::class, 'group_subject', 'group_id', 'subject_id')->withTimestamps();
     }
 
     public function delete()

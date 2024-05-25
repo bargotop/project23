@@ -36,14 +36,14 @@
                             <div class="p-5 rounded-b-xl bg-white space-y-3">
                                 @foreach ($faculty->departments as $department)
                                     <div class="flex items-center justify-between department">
-                                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('departments.show', ['departmentId' => $department->id]) }}'">{{ $department->name }}</div>
-                                        <img class="cursor-pointer ms-2 deleteDepartmentBtn" src="/img/delete.svg" data-modal-toggle="deleteDepartment" data-id="{{ $department->id }}" data-delete-url="{{ route('departments.delete', ['departmentId' => $department->id]) }}">
+                                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('departments.show', ['id' => $department->id]) }}'">{{ $department->name }}</div>
+                                        <img class="cursor-pointer ms-2 deleteDepartmentBtn" src="/img/delete.svg" data-modal-toggle="deleteDepartment" data-id="{{ $department->id }}" data-delete-url="{{ route('departments.delete', ['id' => $department->id]) }}">
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
-                    <img class="cursor-pointer mt-10 mx-2 deleteFacultyBtn" src="/img/delete.svg" data-modal-toggle="deleteFaculty" data-id="{{ $faculty->id }}" data-delete-url="{{ route('faculties.delete', ['facultyId' => $faculty->id]) }}">
+                    <img class="cursor-pointer mt-10 mx-2 deleteFacultyBtn" src="/img/delete.svg" data-modal-toggle="deleteFaculty" data-id="{{ $faculty->id }}" data-delete-url="{{ route('faculties.delete', ['id' => $faculty->id]) }}">
                 </div>
             @endforeach
         </div>
@@ -65,19 +65,6 @@
         $(document).on('click', '.deleteDirection', function() {
             $(this).closest('.flex').remove();
         });
-
-        function handleValidationErrors(errors) {
-            // Clear all previous errors
-            $('input').removeClass('border-red-500');
-            $('.text-red-500').text('');
-
-            // Set new errors
-            $.each(errors, function(field, messages) {
-                var input = $('[name="' + field + '"]');
-                input.addClass('border-red-500');
-                input.next('.text-red-500').text(messages[0]);
-            });
-        }
 
         function deleteFaculty(btn, id, deleteUrl) {
             $.ajax({

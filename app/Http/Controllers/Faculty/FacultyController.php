@@ -24,9 +24,9 @@ class FacultyController extends Controller
         return response()->json(['faculties' => $faculties], 200);
     }
 
-    public function deleteFaculty(int $facultyId): JsonResponse
+    public function deleteFaculty(int $id): JsonResponse
     {
-        $faculty = Faculty::findOrFail($facultyId);
+        $faculty = Faculty::findOrFail($id);
         $faculty->delete();
 
         return response()->json(['success' => true]);

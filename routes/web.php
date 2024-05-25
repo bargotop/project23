@@ -31,39 +31,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('faculties')->group(function () {
         Route::get('/', [FacultyController::class, 'getFaculties'])->name('faculties.show');
         Route::post('/', [FacultyController::class, 'createFaculty'])->name('faculties.create');
-        Route::delete('/{facultyId}', [FacultyController::class, 'deleteFaculty'])->name('faculties.delete');
+        Route::delete('/{id}', [FacultyController::class, 'deleteFaculty'])->name('faculties.delete');
     });
 
     // Departments
     Route::prefix('departments')->group(function () {
-        Route::get('/{departmentId}', [DepartmentController::class, 'show'])->name('departments.show');
-        Route::delete('/{departmentId}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
+        Route::get('/{id}', [DepartmentController::class, 'show'])->name('departments.show');
+        Route::delete('/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
     });
 
     // Groups
     Route::prefix('groups')->group(function () {
-        Route::get('/{groupId}', [GroupController::class, 'show'])->name('groups.show');
+        Route::get('/{id}', [GroupController::class, 'show'])->name('groups.show');
         Route::post('/{departmentId}', [GroupController::class, 'createGroup'])->name('groups.create');
-        Route::delete('/{groupId}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
+        Route::delete('/{id}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
         Route::post('/{groupId}/assign-subjects', [GroupController::class, 'assignSubjectsToGroup'])->name('groups.assignSubjects');
     });
 
     // Students
     Route::prefix('students')->group(function () {
         Route::post('/{groupId}', [StudentController::class, 'createStudent'])->name('students.create');
-        Route::delete('/{studentId}', [StudentController::class, 'deleteStudent'])->name('students.delete');
+        Route::delete('/{id}', [StudentController::class, 'deleteStudent'])->name('students.delete');
     });
 
     // Subjects
     Route::prefix('subjects')->group(function () {
         Route::post('/{groupId}', [SubjectController::class, 'createSubject'])->name('subjects.create');
-        Route::delete('/{subjectId}', [SubjectController::class, 'deleteSubject'])->name('subjects.delete');
+        Route::delete('/{id}', [SubjectController::class, 'deleteSubject'])->name('subjects.delete');
     });
 
     // Attendance
-    Route::prefix('attendances')->group(function () {
-        Route::post('/record', [AttendanceController::class, 'recordAttendance'])->name('attendances.record');
-    });
+    // Route::prefix('attendances')->group(function () {
+    //     Route::post('/record', [AttendanceController::class, 'recordAttendance'])->name('attendances.record');
+    // });
 
 });
 
