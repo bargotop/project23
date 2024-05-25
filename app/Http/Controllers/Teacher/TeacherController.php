@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    public function index(Request $request, int $groupId)
+    public function index(Request $request)
     {
         return view('techer.teacher');
     }
