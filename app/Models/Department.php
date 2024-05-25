@@ -21,10 +21,10 @@ class Department extends Model
         return $this->hasMany(Group::class);
     }
 
-    public function subjects()
-    {
-        return $this->belongsToMany(Subject::class);
-    }
+    // public function subjects()
+    // {
+    //     return $this->belongsToMany(Subject::class);
+    // }
 
     public function delete()
     {

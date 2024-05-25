@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Departments
     Route::prefix('departments')->group(function () {
         Route::get('/{id}', [DepartmentController::class, 'show'])->name('departments.show');
+        Route::post('/{facultyId}', [DepartmentController::class, 'createDepartment'])->name('departments.create');
         Route::delete('/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
     });
 
