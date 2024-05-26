@@ -4,15 +4,15 @@
         <div class="flex justify-between h-16">
             
         <div class="flex items-center">
-            <img class="cursor-pointer" src="/img/logo.png" width="40px" onclick="location='{{ route('dashboard') }}'">
+            <img class="cursor-pointer" src="/img/logo.png" width="40px">
         </div>
 
         <!-- Navigation Links -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
             @if(Auth::user()->isAdmin())
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Главная страница</x-nav-link>
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Главная</x-nav-link>
             @elseif(Auth::user()->isTeacher())
-                <x-nav-link :href="route('teacher.index')" :active="request()->routeIs('teacher.index')">Главная страница</x-nav-link>
+                <x-nav-link :href="route('teacher.index')" :active="request()->routeIs('teacher.index')">Главная</x-nav-link>
                 <x-nav-link :href="route('schedule.index')" :active="request()->routeIs('schedule.index')">Расписание</x-nav-link>
             @endif
         </div>
@@ -34,7 +34,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Профиль') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -44,7 +44,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Выйти') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
