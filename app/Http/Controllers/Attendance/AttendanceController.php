@@ -12,7 +12,7 @@ use Auth;
 
 class AttendanceController extends Controller
 {
-    public function index(Request $request, $scheduleId)
+    public function index(Request $request, int $scheduleId)
     {
         $schedule = Schedule::with('group.students')->findOrFail($scheduleId);
         $students = $schedule->group->students;

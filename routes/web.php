@@ -46,6 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Groups
     Route::prefix('groups')->group(function () {
+        Route::get('/')->name('groups');
         Route::get('/{id}', [GroupController::class, 'show'])->name('groups.show');
         Route::post('/{departmentId}', [GroupController::class, 'createGroup'])->name('groups.create');
         Route::delete('/{id}', [GroupController::class, 'deleteGroup'])->name('groups.delete');
@@ -89,8 +90,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Attendance
     Route::prefix('attendances')->group(function () {
-        Route::get('/attendance/{schedule}', [AttendanceController::class, 'index'])->name('attendances.index');
-        Route::post('/attendance/{schedule}', [AttendanceController::class, 'store'])->name('attendances.store');
+        Route::get('/')->name('attendances');
+        Route::get('/{scheduleId}', [AttendanceController::class, 'index'])->name('attendances.index');
+        Route::post('/{scheduleId}', [AttendanceController::class, 'store'])->name('attendances.store');
     });
 
 });

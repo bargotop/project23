@@ -63,7 +63,7 @@
     <script>
         $('#group').change(function() {
             const groupId = $(this).val();
-            axios.get(`/groups/${groupId}/subjects`)
+            axios.get(`{{ route('groups') }}/${groupId}/subjects`)
             .then(function (response) {
                 const subjects = response.data.data.subjects;
                 $('#subjects').find('option:not(:first)').remove();
