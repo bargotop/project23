@@ -23,12 +23,20 @@
         {{-- </form> --}}
         <div class="py-10">
             <div class="p-5 rounded-xl bg-white space-y-3">
-                {{-- @foreach ($group->subjects as $subject)
-                    <div class="flex items-center justify-between subject">
-                        <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50">{{ $subject->name }}</div>
-                        <img class="cursor-pointer ms-2 deleteSubjectBtn" src="/img/delete.svg" data-modal-toggle="deleteSubject" data-id="{{ $subject->id }}" data-delete-url="{{ route('subjects.delete', ['id' => $subject->id]) }}">
-                    </div>
-                @endforeach --}}
+                <ul>
+                    @foreach($schedule as $item)
+                        <li>
+                            Group: {{ $item->group->name }} <br>
+                            Subject: {{ $item->subject->name }} <br>
+                            @if($item->start_time)
+                                Start Time: {{ $item->start_time }} <br>
+                            @endif
+                            @if($item->end_time)
+                                End Time: {{ $item->end_time }} <br>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
         @include("pop-ups.deleteSubject")

@@ -9,42 +9,49 @@ use App\Models\Schedule;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ScheduleController extends Controller
 {
     public function monday(Request $request)
     {
         $groups = $this->getGroups();
+        $schedule = $this->getScheduleForDay('monday');
         return view('schedule.monday', compact('groups'));
     }
 
     public function tuesday(Request $request)
     {
         $groups = $this->getGroups();
-        return view('schedule.tuesday');
+        $schedule = $this->getScheduleForDay('tuesday');
+        return view('schedule.tuesday', compact('groups'));
     }
 
     public function wednesday(Request $request)
     {
         $groups = $this->getGroups();
+        $schedule = $this->getScheduleForDay('wednesday');
         return view('schedule.wednesday', compact('groups'));
     }
 
     public function thursday(Request $request)
     {
         $groups = $this->getGroups();
+        $schedule = $this->getScheduleForDay('thursday');
         return view('schedule.thursday', compact('groups'));
     }
 
     public function friday(Request $request)
     {
         $groups = $this->getGroups();
+        $schedule = $this->getScheduleForDay('friday');
         return view('schedule.friday', compact('groups'));
     }
 
     public function saturday(Request $request)
     {
         $groups = $this->getGroups();
+        $schedule = $this->getScheduleForDay('saturday');
         return view('schedule.saturday', compact('groups'));
     }
     
@@ -53,12 +60,32 @@ class ScheduleController extends Controller
         return Group::all();
     }
 
+    private function getScheduleForDay(string $dayOfWeek)
+    {
+        $schedules = Schedule::with(['group', 'subject'])
+            ->where('user_id', auth()->id())
+            ->where('day_of_week', $dayOfWeek)
+            ->get();
+        return $schedules;
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'group_id' => 'required|exists:groups,id',
             'subject_id' => 'required|exists:subjects,id',
-            'day_of_week' => 'required|string',
+            'day_of_week' => [
+                'required',
+                'string',
+                Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']),
+                // Проверка уникальности
+                Rule::unique('schedules')->where(function ($query) use ($request) {
+                    return $query->where('user_id', auth()->id())
+                                 ->where('group_id', $request->group_id)
+                                 ->where('subject_id', $request->subject_id)
+                                 ->where('day_of_week', $request->day_of_week);
+                })
+            ],
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i',
         ]);
