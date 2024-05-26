@@ -77,7 +77,7 @@ class AttendanceController extends Controller
                 return Carbon::parse($attendance->date)->format('d.m.y');
             });
 
-        $today = Carbon::today()->format('d.m.y');
+        $today = $this->getTodayDate('d.m.y');
 
         return view('teacher.attendance', compact('schedule', 'students', 'dates', 'attendances', 'today'));
     }
@@ -118,5 +118,6 @@ class AttendanceController extends Controller
     private function getTodayDate(string $format)
     {
         return Carbon::today()->format($format);
+        // return Carbon::tomorrow()->format($format); // for local test
     }
 }
