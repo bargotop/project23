@@ -12,6 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="/js/app.js"></script>
+        <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -30,7 +31,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="font-bold">
                 {{ $slot }}
             </main>
         </div>

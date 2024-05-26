@@ -1,12 +1,12 @@
 <x-app-layout>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <div class="max-w-7xl mx-auto sm:px-6 font-bold">
+    <div class="max-w-7xl mx-auto sm:px-6">
         <div class="mt-5">{{$group->name}}</div>
         <div class="flex space-x-3">
             <div class="w-1/2">
                 <form id="createSubjectForm" action="{{ route('subjects.create', ['groupId' => $group->id]) }}" method="POST">
                     @csrf
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-5 p-5 space-y-3">
+                    <div class="bg-white overflow-hidden shadow sm:rounded mt-5 p-5 space-y-3">
                         <div class="relative">
                             <div class="pointer-events-none absolute mt-2.5 flex items-center pl-3">
                                 <img src="/img/import-contacts.svg">
@@ -20,10 +20,10 @@
                     </div>
                 </form>
                 <div class="py-10">
-                    <div class="p-5 rounded-xl bg-white space-y-3">
+                    <div class="bg-white space-y-3 shadow p-5 sm:rounded">
                         @foreach ($group->subjects as $subject)
                             <div class="flex items-center justify-between subject">
-                                <div class="w-full p-3 font-bold text-gray-900 rounded-lg bg-gray-50">{{ $subject->name }}</div>
+                                <div class="w-full p-3 rounded bg-gray-50">{{ $subject->name }}</div>
                                 <img class="cursor-pointer ms-2 deleteSubjectBtn" src="/img/delete.svg" data-modal-toggle="deleteSubject" data-id="{{ $subject->id }}" data-delete-url="{{ route('subjects.delete', ['id' => $subject->id]) }}">
                             </div>
                         @endforeach
@@ -34,7 +34,7 @@
             <div class="w-1/2">
                 <form id="createStudentForm" action="{{ route('students.create', ['groupId' => $group->id]) }}" method="POST">
                     @csrf
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-5 p-5 space-y-3">
+                    <div class="bg-white overflow-hidden shadow sm:rounded mt-5 p-5 space-y-3">
                         <div class="relative">
                             <div class="pointer-events-none absolute mt-2.5 flex items-center pl-3">
                                 <img src="/img/person.svg">
@@ -48,7 +48,7 @@
                     </div>
                 </form>
                 <div class="py-10">
-                    <div class="p-5 rounded-xl bg-white space-y-3">
+                    <div class="bg-white space-y-3 shadow p-5 sm:rounded">
                         @foreach ($group->students as $student)
                             <div class="flex items-center justify-between student">
                                 <div>{{ $student->full_name }}</div>
@@ -62,6 +62,24 @@
         </div>
     </div>
     <script>
+        $('#createSubjectForm').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: $(this).serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    handleValidationErrors(xhr.responseJSON.errors);
+                }
+            });
+        });
         function deleteSubject(btn, id, deleteUrl) {
             $.ajax({
                 url: deleteUrl,
@@ -87,7 +105,7 @@
                 deleteSubject(btn, id, deleteUrl)
             });
         });
-        $('#createSubjectForm').on('submit', function(event) {
+        $('#createStudentForm').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
@@ -130,24 +148,5 @@
                 deleteStudent(btn, id, deleteUrl)
             });
         });
-        $('#createStudentForm').on('submit', function(event) {
-            event.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: $(this).serialize(),
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    handleValidationErrors(xhr.responseJSON.errors);
-                }
-            });
-        });
     </script>
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 </x-app-layout>

@@ -8,4 +8,3 @@ function handleValidationErrors(errors) {
         input.next('.text-red-500').text(messages[0]);
     });
 }
-
