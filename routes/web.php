@@ -6,10 +6,10 @@ use App\Http\Controllers\Faculty\FacultyController;
 use App\Http\Controllers\Group\GroupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Schedule\ScheduleController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Subject\SubjectController;
 use App\Http\Controllers\Teacher\TeacherController;
-use App\Http\Controllers\Weekday\WeekdayController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -73,12 +73,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Teacher
     Route::prefix('weekday')->group(function () {
-        Route::get('/monday', [WeekdayController::class, 'monday'])->name('weekday.monday');
-        Route::get('/tuesday', [WeekdayController::class, 'tuesday'])->name('weekday.tuesday');
-        Route::get('/wednesday', [WeekdayController::class, 'wednesday'])->name('weekday.wednesday');
-        Route::get('/thursday', [WeekdayController::class, 'thursday'])->name('weekday.thursday');
-        Route::get('/friday', [WeekdayController::class, 'friday'])->name('weekday.friday');
-        Route::get('/saturday', [WeekdayController::class, 'saturday'])->name('weekday.saturday');
+        Route::get('/monday', [ScheduleController::class, 'monday'])->name('weekday.monday');
+        Route::get('/tuesday', [ScheduleController::class, 'tuesday'])->name('weekday.tuesday');
+        Route::get('/wednesday', [ScheduleController::class, 'wednesday'])->name('weekday.wednesday');
+        Route::get('/thursday', [ScheduleController::class, 'thursday'])->name('weekday.thursday');
+        Route::get('/friday', [ScheduleController::class, 'friday'])->name('weekday.friday');
+        Route::get('/saturday', [ScheduleController::class, 'saturday'])->name('weekday.saturday');
+
+        Route::post('/store', [ScheduleController::class, 'store'])->name('weekday.store');
     });
 
     // Attendance
