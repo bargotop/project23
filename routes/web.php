@@ -72,15 +72,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     
     // Teacher
-    Route::prefix('weekday')->group(function () {
-        Route::get('/monday', [ScheduleController::class, 'monday'])->name('weekday.monday');
-        Route::get('/tuesday', [ScheduleController::class, 'tuesday'])->name('weekday.tuesday');
-        Route::get('/wednesday', [ScheduleController::class, 'wednesday'])->name('weekday.wednesday');
-        Route::get('/thursday', [ScheduleController::class, 'thursday'])->name('weekday.thursday');
-        Route::get('/friday', [ScheduleController::class, 'friday'])->name('weekday.friday');
-        Route::get('/saturday', [ScheduleController::class, 'saturday'])->name('weekday.saturday');
+    Route::prefix('schedule')->group(function () {
+        Route::get('/monday', [ScheduleController::class, 'monday'])->name('schedule.monday');
+        Route::get('/tuesday', [ScheduleController::class, 'tuesday'])->name('schedule.tuesday');
+        Route::get('/wednesday', [ScheduleController::class, 'wednesday'])->name('schedule.wednesday');
+        Route::get('/thursday', [ScheduleController::class, 'thursday'])->name('schedule.thursday');
+        Route::get('/friday', [ScheduleController::class, 'friday'])->name('schedule.friday');
+        Route::get('/saturday', [ScheduleController::class, 'saturday'])->name('schedule.saturday');
 
-        Route::post('/store', [ScheduleController::class, 'store'])->name('weekday.store');
+        Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
     });
 
     // Attendance
