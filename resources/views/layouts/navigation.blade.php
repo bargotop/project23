@@ -2,17 +2,20 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img class="cursor-pointer" src="/img/logo.png" width="40px" onclick="location='{{ route('dashboard') }}'">
-                </div>
+            
+        <div class="flex items-center">
+            <img class="cursor-pointer" src="/img/logo.png" width="40px" onclick="location='{{ route('dashboard') }}'">
+        </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Факультеты</x-nav-link>
-                </div>
-            </div>
+        <!-- Navigation Links -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            @if(Auth::user()->isAdmin())
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Главная страница</x-nav-link>
+            @elseif(Auth::user()->isTeacher())
+                <x-nav-link :href="route('teacher.index')" :active="request()->routeIs('teacher.index')">Главная страница</x-nav-link>
+                <x-nav-link :href="route('schedule.index')" :active="request()->routeIs('schedule.index')">Расписание</x-nav-link>
+            @endif
+        </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

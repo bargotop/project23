@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
-class AdminMiddleware
+class TeacherMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,12 +17,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role->name === 'admin') {
+        if (Auth::check() && Auth::user()->role->name === 'teacher') {
             return $next($request);
         }
 
-        // Who is not admin
+        // Who is not teacher
         return abort(403, 'Unauthorized action.');
-        // return redirect('/'); 
+        // return redirect('/');
     }
 }

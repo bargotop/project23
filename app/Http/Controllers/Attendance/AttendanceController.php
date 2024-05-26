@@ -44,7 +44,9 @@ class AttendanceController extends Controller
     private $daysAfter = 5;
     public function index(Request $request, int $scheduleId)
     {
-        $schedule = Schedule::with('group.students')->findOrFail($scheduleId);
+        $schedule = Schedule::with(['group.students' => function ($query) {
+            $query->orderBy('full_name', 'asc');
+        }])->findOrFail($scheduleId);
         $students = $schedule->group->students;
         $dates = collect();
 
@@ -117,7 +119,7 @@ class AttendanceController extends Controller
 
     private function getTodayDate(string $format)
     {
-        return Carbon::today()->format($format);
+        return Carbon::today(6)->format($format);
         // return Carbon::tomorrow()->format($format); // for local test
     }
 }

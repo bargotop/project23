@@ -14,13 +14,14 @@ class GroupController extends Controller
 {
     public function show(int $id)
     {
-        $group = Group::with(['students' => function($query) {
-            $query->orderBy('created_at', 'desc');
-        }, 'subjects'])->findOrFail($id);
-
-        // $subjects = Subject::all();
-
-        // $users = User::all();
+        $group = Group::with([
+            'students' => function($query) {
+                $query->orderBy('full_name', 'asc');
+            },
+            'subjects' => function($query) {
+                $query->orderBy('name', 'asc');
+            }
+        ])->findOrFail($id);
 
         return view('group', compact('group'));
     }
@@ -51,22 +52,10 @@ class GroupController extends Controller
 
     public function getGroupSubjects(Request $request, int $id)
     {
-        $group = Group::with('subjects')->findOrFail($id);
+        $group = Group::with(['subjects' => function ($query) {
+            $query->orderBy('name', 'asc');
+        }])->findOrFail($id);
 
         return response()->json(['data' => $group]);
-    }
-
-    public function assignSubjectsToGroup(Request $request, $id)
-    {
-        $request->validate([
-            'subject_ids' => 'required|array',
-            'subject_ids.*' => 'exists:subjects,id',
-        ]);
-
-        $group = Group::findOrFail($id);
-        $group->subjects()->sync($request->subject_ids);
-
-        return response()->json(['success' => true]);
-        // return redirect()->back()->with('success', 'Subjects assigned to group successfully');
     }
 }

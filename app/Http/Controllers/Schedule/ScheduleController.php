@@ -70,6 +70,7 @@ class ScheduleController extends Controller
         $schedules = Schedule::with(['group', 'subject'])
             ->where('user_id', auth()->id())
             ->where('day_of_week', $dayOfWeek)
+            ->orderBy('start_time', 'asc')
             ->get();
 
         return response()->json(['data' => $schedules]);
@@ -77,7 +78,7 @@ class ScheduleController extends Controller
     
     private function getGroups()
     {
-        return Group::all();
+        return Group::orderBy('name', 'asc')->get();
     }
 
     private function getScheduleForDay(string $dayOfWeek)
@@ -85,6 +86,7 @@ class ScheduleController extends Controller
         $schedules = Schedule::with(['group', 'subject'])
             ->where('user_id', auth()->id())
             ->where('day_of_week', $dayOfWeek)
+            ->orderBy('start_time', 'asc')
             ->get();
         return $schedules;
     }
@@ -98,13 +100,6 @@ class ScheduleController extends Controller
                 'required',
                 'string',
                 Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']),
-                // Проверка уникальности
-                // Rule::unique('schedules')->where(function ($query) use ($request) {
-                //     return $query->where('user_id', auth()->id())
-                //                  ->where('group_id', $request->group_id)
-                //                  ->where('subject_id', $request->subject_id)
-                //                  ->where('day_of_week', $request->day_of_week);
-                // })
             ],
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i',
@@ -129,12 +124,4 @@ class ScheduleController extends Controller
 
         return response()->json(['success' => true]);
     }
-
-    // public function index()
-    // {
-    //     $schedules = Schedule::with(['group', 'subject'])
-    //         ->where('user_id', auth()->id())
-    //         ->get();
-    //     return view('schedules.index', compact('schedules'));
-    // }
 }
