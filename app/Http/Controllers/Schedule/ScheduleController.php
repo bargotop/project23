@@ -15,7 +15,7 @@ class ScheduleController extends Controller
 {
     public function index(Request $request)
     {
-        return view('schedule.schedule');
+        return view('teacher.schedule.schedule');
     }
 
     public function monday(Request $request)
