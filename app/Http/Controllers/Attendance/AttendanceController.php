@@ -32,7 +32,7 @@ class AttendanceController extends Controller
                 return Carbon::parse($attendance->date)->format('d-m');
             });
 
-        return view('attendance.index', compact('schedule', 'students', 'dates', 'attendances'));
+        return view('teacher.attendance', compact('schedule', 'students', 'dates', 'attendances'));
     }
 
     public function store(Request $request, $scheduleId)
