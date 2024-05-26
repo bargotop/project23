@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-            $table->foreignId('author_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('schedule_id');
             $table->date('date');
-            $table->boolean('present');
+            $table->boolean('is_present')->default(false);
             $table->timestamps();
+
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
         });
     }
 

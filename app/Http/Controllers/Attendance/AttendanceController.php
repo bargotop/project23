@@ -3,31 +3,59 @@
 namespace App\Http\Controllers\Attendance;
 
 use App\Http\Controllers\Controller;
-use App\Models\Attendance;
 use Illuminate\Http\Request;
+use App\Models\Attendance;
+use App\Models\Student;
+use App\Models\Schedule;
+use Carbon\Carbon;
+use Auth;
 
 class AttendanceController extends Controller
 {
-    public function recordAttendance(Request $request)
+    public function index(Request $request, $scheduleId)
+    {
+        $schedule = Schedule::with('group.students')->findOrFail($scheduleId);
+        $students = $schedule->group->students;
+        $dates = collect();
+
+        // Генерация дат за последние 30 дней
+        for ($i = 0; $i < 30; $i++) {
+            $dates->push(Carbon::today()->subDays($i)->format('d-m'));
+        }
+
+        $attendances = Attendance::where('schedule_id', $scheduleId)
+            ->whereIn('date', $dates->map(function ($date) {
+                return Carbon::createFromFormat('d-m', $date)->format('Y-m-d');
+            }))
+            ->get()
+            ->groupBy(function ($attendance) {
+                return Carbon::parse($attendance->date)->format('d-m');
+            });
+
+        return view('attendance.index', compact('schedule', 'students', 'dates', 'attendances'));
+    }
+
+    public function store(Request $request, $scheduleId)
     {
         $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'subject_id' => 'required|exists:subjects,id',
-            'date' => 'required|date',
-            'present' => 'required|boolean',
+            'attendances' => 'required|array',
+            'attendances.*.student_id' => 'required|exists:students,id',
+            'attendances.*.date' => 'required|date',
+            'attendances.*.is_present' => 'required|boolean',
         ]);
 
-        Attendance::updateOrCreate(
-            [
-                'student_id' => $request->student_id,
-                'subject_id' => $request->subject_id,
-                'date' => $request->date,
-            ],
-            [
-                'present' => $request->present,
-                'author_id' => auth()->id(),
-            ]
-        );
+        foreach ($request->attendances as $attendanceData) {
+            Attendance::updateOrCreate(
+                [
+                    'student_id' => $attendanceData['student_id'],
+                    'schedule_id' => $scheduleId,
+                    'date' => $attendanceData['date'],
+                ],
+                [
+                    'is_present' => $attendanceData['is_present'],
+                ]
+            );
+        }
 
         return response()->json(['success' => true]);
     }

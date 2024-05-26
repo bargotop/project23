@@ -73,6 +73,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Teacher
     Route::prefix('schedule')->group(function () {
+        Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
+        Route::delete('/{id}', [ScheduleController::class, 'deleteSchedule'])->name('schedule.delete');
+
         Route::get('/monday', [ScheduleController::class, 'monday'])->name('schedule.monday');
         Route::get('/tuesday', [ScheduleController::class, 'tuesday'])->name('schedule.tuesday');
         Route::get('/wednesday', [ScheduleController::class, 'wednesday'])->name('schedule.wednesday');
@@ -80,14 +84,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/friday', [ScheduleController::class, 'friday'])->name('schedule.friday');
         Route::get('/saturday', [ScheduleController::class, 'saturday'])->name('schedule.saturday');
 
-        Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
-        Route::delete('/{id}', [ScheduleController::class, 'deleteSchedule'])->name('schedule.delete');
     });
 
     // Attendance
-    // Route::prefix('attendances')->group(function () {
-    //     Route::post('/record', [AttendanceController::class, 'recordAttendance'])->name('attendances.record');
-    // });
+    Route::prefix('attendances')->group(function () {
+        Route::get('/attendance/{schedule}', [AttendanceController::class, 'index'])->name('attendances.index');
+        Route::post('/attendance/{schedule}', [AttendanceController::class, 'store'])->name('attendances.store');
+    });
 
 });
 
