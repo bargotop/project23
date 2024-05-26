@@ -58,7 +58,7 @@
                     const endTime = item.end_time;
 
                     const scheduleItemHTML = `
-                        <div class="flex justify-between p-3 cursor-pointer hover:bg-gray-100 hover:shadow">
+                        <div class="flex justify-between p-3 cursor-pointer hover:bg-gray-100 hover:shadow" onclick="location='{{ route('attendances') }}/${item.id}'">
                             <div>
                                 <div>${groupName}</div>
                                 <div>${subjectName}</div>
