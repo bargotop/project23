@@ -86,8 +86,8 @@ class ScheduleController extends Controller
                 //                  ->where('day_of_week', $request->day_of_week);
                 // })
             ],
-            'start_time' => 'nullable|date_format:H:i',
-            'end_time' => 'nullable|date_format:H:i',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
         ]);
 
         Schedule::create([
@@ -100,7 +100,14 @@ class ScheduleController extends Controller
         ]);
 
         return response()->json(['success' => true]);
-        // return redirect()->route('schedules.index')->with('success', 'Schedule created successfully');
+    }
+
+    public function deleteSchedule(int $id): JsonResponse
+    {
+        $schedule = Schedule::findOrFail($id);
+        $schedule->delete();
+
+        return response()->json(['success' => true]);
     }
 
     public function index()

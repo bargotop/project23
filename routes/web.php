@@ -81,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/saturday', [ScheduleController::class, 'saturday'])->name('schedule.saturday');
 
         Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
+        Route::delete('/{id}', [ScheduleController::class, 'deleteSchedule'])->name('schedule.delete');
     });
 
     // Attendance
