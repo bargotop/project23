@@ -76,6 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
         Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
         Route::delete('/{id}', [ScheduleController::class, 'deleteSchedule'])->name('schedule.delete');
+        Route::post('/subjects-by-date', [ScheduleController::class, 'getSubjectsByDate'])->name('schedule.subjects.by-date');
 
         Route::get('/monday', [ScheduleController::class, 'monday'])->name('schedule.monday');
         Route::get('/tuesday', [ScheduleController::class, 'tuesday'])->name('schedule.tuesday');

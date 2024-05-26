@@ -7,6 +7,7 @@ use App\Models\Group;
 use App\Models\GroupSubject;
 use App\Models\Schedule;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -58,6 +59,20 @@ class ScheduleController extends Controller
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('saturday');
         return view('teacher.schedule.scheduleDays.saturday', compact('groups', 'schedule'));
+    }
+
+    public function getSubjectsByDate(Request $request)
+    {
+        $date = Carbon::parse($request->date);
+        $dayOfWeek = strtolower($date->format('l')); // Получаем день недели (monday, tuesday и т.д.)
+
+        // Получение расписания на указанный день недели для текущего пользователя
+        $schedules = Schedule::with(['group', 'subject'])
+            ->where('user_id', auth()->id())
+            ->where('day_of_week', $dayOfWeek)
+            ->get();
+
+        return response()->json(['data' => $schedules]);
     }
     
     private function getGroups()
