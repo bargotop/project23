@@ -115,11 +115,11 @@ class ScheduleController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function index()
-    {
-        $schedules = Schedule::with(['group', 'subject'])
-            ->where('user_id', auth()->id())
-            ->get();
-        return view('schedules.index', compact('schedules'));
-    }
+    // public function index()
+    // {
+    //     $schedules = Schedule::with(['group', 'subject'])
+    //         ->where('user_id', auth()->id())
+    //         ->get();
+    //     return view('schedules.index', compact('schedules'));
+    // }
 }
