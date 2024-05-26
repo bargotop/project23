@@ -22,42 +22,42 @@ class ScheduleController extends Controller
     {
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('monday');
-        return view('schedule.monday', compact('groups', 'schedule'));
+        return view('teacher.schedule.scheduleDays.monday', compact('groups', 'schedule'));
     }
 
     public function tuesday(Request $request)
     {
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('tuesday');
-        return view('schedule.tuesday', compact('groups', 'schedule'));
+        return view('teacher.schedule.scheduleDays.tuesday', compact('groups', 'schedule'));
     }
 
     public function wednesday(Request $request)
     {
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('wednesday');
-        return view('schedule.wednesday', compact('groups', 'schedule'));
+        return view('teacher.schedule.scheduleDays.wednesday', compact('groups', 'schedule'));
     }
 
     public function thursday(Request $request)
     {
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('thursday');
-        return view('schedule.thursday', compact('groups', 'schedule'));
+        return view('teacher.schedule.scheduleDays.thursday', compact('groups', 'schedule'));
     }
 
     public function friday(Request $request)
     {
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('friday');
-        return view('schedule.friday', compact('groups', 'schedule'));
+        return view('teacher.schedule.scheduleDays.friday', compact('groups', 'schedule'));
     }
 
     public function saturday(Request $request)
     {
         $groups = $this->getGroups();
         $schedule = $this->getScheduleForDay('saturday');
-        return view('schedule.saturday', compact('groups', 'schedule'));
+        return view('teacher.schedule.scheduleDays.saturday', compact('groups', 'schedule'));
     }
     
     private function getGroups()
