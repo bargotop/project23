@@ -27,11 +27,11 @@ class AttendanceController extends Controller
         // Генерация дат на основе расписания
         for ($i = $this->daysBefore; $i <= $this->daysAfter; $i++) {
             // если надо на все дни
-            // $dates->push(Carbon::today()->addDays($i)->format('d.m.y'));
-            $date = Carbon::today()->addDays($i);
-            if ($scheduledDays->contains(strtolower($date->format('l')))) {
-                $dates->push($date->format('d.m.y'));
-            }
+            $dates->push(Carbon::today()->addDays($i)->format('d.m.y'));
+            // $date = Carbon::today()->addDays($i);
+            // if ($scheduledDays->contains(strtolower($date->format('l')))) {
+            //     $dates->push($date->format('d.m.y'));
+            // }
         }
 
         $attendances = Attendance::where('schedule_id', $scheduleId)
