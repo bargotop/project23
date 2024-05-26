@@ -79,12 +79,12 @@ class ScheduleController extends Controller
                 'string',
                 Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']),
                 // Проверка уникальности
-                Rule::unique('schedules')->where(function ($query) use ($request) {
-                    return $query->where('user_id', auth()->id())
-                                 ->where('group_id', $request->group_id)
-                                 ->where('subject_id', $request->subject_id)
-                                 ->where('day_of_week', $request->day_of_week);
-                })
+                // Rule::unique('schedules')->where(function ($query) use ($request) {
+                //     return $query->where('user_id', auth()->id())
+                //                  ->where('group_id', $request->group_id)
+                //                  ->where('subject_id', $request->subject_id)
+                //                  ->where('day_of_week', $request->day_of_week);
+                // })
             ],
             'start_time' => 'nullable|date_format:H:i',
             'end_time' => 'nullable|date_format:H:i',
