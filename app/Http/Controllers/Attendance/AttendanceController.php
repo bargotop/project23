@@ -46,13 +46,14 @@ class AttendanceController extends Controller
     {
         $schedule = Schedule::with(['group.students' => function ($query) {
             $query->orderBy('full_name', 'asc');
-        }])->findOrFail($scheduleId);
+        }])->where('user_id', auth()->id()) ->findOrFail($scheduleId);
         $students = $schedule->group->students;
         $dates = collect();
 
         // Получение всех записей расписания для группы и предмета
         $scheduledEntries = Schedule::where('group_id', $schedule->group_id)
                                     ->where('subject_id', $schedule->subject_id)
+                                    ->where('user_id', auth()->id())
                                     ->get();
 
         // Генерация дат на основе расписания
@@ -120,6 +121,6 @@ class AttendanceController extends Controller
     private function getTodayDate(string $format)
     {
         return Carbon::today(6)->format($format);
-        // return Carbon::tomorrow()->format($format); // for local test
+        // return Carbon::tomorrow(6)->format($format); // for local test
     }
 }

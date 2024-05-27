@@ -35,7 +35,6 @@
                 scheduleContainer.empty();
                 let convertedDate = forDate.split('.').reverse().join('-');
 
-                // Получаем день недели
                 let dayOfWeek = new Date(convertedDate).toLocaleDateString('ru-RU', { weekday: 'long' });
 
                 let headerText = `${dayOfWeek}, ${forDate}`;
@@ -45,19 +44,16 @@
                 let scheduleHeader = $('<div class="p-3">').text(headerText);
                 scheduleContainer.prepend(scheduleHeader);
 
-                // Если нет доступных занятий
                 if (scheduleData.length === 0) {
                     scheduleContainer.append('<div class="p-3">Нет доступных занятий</div>');
                 } else {
                     let currentDate = new Date();
-                    // currentDate.setHours(8);
-                    
                     const currentTime = currentDate.toTimeString().split(' ')[0]; // HH:MM:SS
                     const todayDate = currentDate.toLocaleDateString('ru-RU', {
                         day: '2-digit',
                         month: '2-digit',
                         year: 'numeric'
-                    }).split('.').join('.'); // dd.mm.yyyy
+                    }).split('.').join('.');
 
                     $.each(scheduleData, function(index, item) {
                         const subjectName = item.subject.name;
@@ -100,13 +96,12 @@
                 });
             }
 
-            // Автоматический выбор сегодняшней даты при загрузке страницы
             var today = new Date();
             var formattedToday = today.toLocaleDateString('ru-RU', {
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric'
-            }).split('.').join('.'); // dd.mm.yyyy
+            }).split('.').join('.');
 
             datePicker.selectDate(today);
         });

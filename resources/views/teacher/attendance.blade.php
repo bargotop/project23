@@ -62,11 +62,9 @@
     </style>
     <script type="text/javascript">
         $('.attendance-checkbox').on('change', function() {
-            // Собираем данные формы
             const $form = $('#attendance-form');
             const data = $form.serialize();
 
-            // Отправка данных через AJAX
             $.ajax({
                 url: $form.attr('action'),
                 method: 'POST',

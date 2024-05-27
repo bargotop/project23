@@ -36,7 +36,7 @@
                             <span class="text-red-500"></span>
                         </div>
                     </div>
-                    <button class="text-white bg-green-500 hover:bg-green-700 active:bg-green-900 py-2 px-4 rounded" type="submit">Создать предмет</button>
+                    <button class="text-white bg-green-500 hover:bg-green-700 active:bg-green-900 py-2 px-4 rounded" type="submit">Создать занятие</button>
                 </div>
             </div>
         </form>
@@ -44,7 +44,7 @@
             <div class="bg-white space-y-3 shadow p-5 sm:rounded">
                 @foreach($schedule as $item)
                     <div class="flex items-center justify-between schedule">
-                        <div class="w-full flex justify-between p-3 rounded bg-gray-50">
+                        <div class="w-full flex justify-between p-3 rounded bg-gray-50">дух времени
                             <div>
                                 <div>{{ $item->group->name }}</div>
                                 <div>{{ $item->subject->name }}</div>
