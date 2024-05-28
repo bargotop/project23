@@ -13,33 +13,6 @@ use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
-    // $schedule = Schedule::with('group.students')->findOrFail($scheduleId);
-    // $students = $schedule->group->students;
-    // $dates = collect();
-
-    // // Получение дней недели, на которые запланированы занятия по предмету
-    // $scheduledDays = Schedule::where('id', $scheduleId)->pluck('day_of_week')->unique();
-
-    // // Генерация дат на основе расписания
-    // for ($i = $this->daysBefore; $i <= $this->daysAfter; $i++) {
-    //     // если надо на все дни
-    //     $dates->push(Carbon::today()->addDays($i)->format('d.m.y'));
-    //     // $date = Carbon::today()->addDays($i);
-    //     // if ($scheduledDays->contains(strtolower($date->format('l')))) {
-    //     //     $dates->push($date->format('d.m.y'));
-    //     // }
-    // }
-
-    // $attendances = Attendance::where('schedule_id', $scheduleId)
-    //     ->whereIn('date', $dates->map(function ($date) {
-    //         return Carbon::createFromFormat('d.m.y', $date)->format('Y-m-d');
-    //     }))
-    //     ->get()
-    //     ->groupBy(function ($attendance) {
-    //         return Carbon::parse($attendance->date)->format('d.m.y');
-    //     });
-
-    // $today = $this->getTodayDate('d.m.y');
     private $daysBefore = -10;
     private $daysAfter = 5;
     public function index(Request $request, int $scheduleId)

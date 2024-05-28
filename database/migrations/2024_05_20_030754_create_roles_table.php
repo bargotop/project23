@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
@@ -29,7 +26,7 @@ return new class extends Migration
 
         // Добавить поле role_id в таблицу users
         Schema::table('users', function (Blueprint $table) use ($teacherRoleId) {
-            $table->unsignedBigInteger('role_id')->default($teacherRoleId); // Установите значение по умолчанию
+            $table->unsignedBigInteger('role_id')->default($teacherRoleId); // Установить значение по умолчанию
         });
 
         // Обновить существующие записи в таблице users для установки значения role_id
@@ -41,9 +38,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {

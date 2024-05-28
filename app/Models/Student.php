@@ -18,18 +18,4 @@ class Student extends Model
     {
         return $this->hasMany(Attendance::class);
     }
-
-    public function delete()
-    {
-        $group = $this->group;
-        parent::delete();
-
-        // Проверяем, остались ли другие студенты в группе
-        // Не удалять
-        // if ($group && $group->students()->count() === 0) {
-            // $group->delete();
-        // }
-
-        return true;
-    }
 }

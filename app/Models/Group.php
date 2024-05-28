@@ -25,16 +25,4 @@ class Group extends Model
     {
         return $this->belongsToMany(Subject::class, 'group_subject', 'group_id', 'subject_id')->withTimestamps();
     }
-
-    public function delete()
-    {
-        $department = $this->department;
-        return parent::delete();
-
-        // Проверяем, остались ли другие группы в отделении
-        // Не удаляем направление, даже если не осталось групп
-        // if ($department && $department->groups()->count() === 0) {
-        //     $department->delete();
-        // }
-    }
 }

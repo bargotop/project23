@@ -11,11 +11,6 @@ class Subject extends Model
 
     protected $fillable = ['name', 'author_id'];
 
-    // public function departments()
-    // {
-    //     return $this->belongsToMany(Department::class);
-    // }
-
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_subject', 'subject_id', 'group_id')->withTimestamps();
