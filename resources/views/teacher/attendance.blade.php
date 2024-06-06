@@ -34,7 +34,7 @@
                                     <input type="hidden" name="attendances[{{ $student->id }}][{{ $date['schedule_id'] }}][date]" value="{{ \Carbon\Carbon::createFromFormat('d.m.y', $date['date'])->format('Y-m-d') }}">
                                     <input type="hidden" name="attendances[{{ $student->id }}][{{ $date['schedule_id'] }}][is_present]" value="0">
                                     <input class="w-5 h-5 border-gray-300 rounded attendance-checkbox" type="checkbox" name="attendances[{{ $student->id }}][{{ $date['schedule_id'] }}][is_present]" value="1"
-                                        @if(isset($attendances[$date['date']]) && $attendances[$date['date']]->where('student_id', $student->id)->first()?->is_present)
+                                        @if(isset($attendances[$date['date']]) && $attendances[$date['date']]->where('student_id', $student->id)->where('schedule_id', $date['schedule_id'])->first()?->is_present)
                                             checked
                                         @endif
                                         @if($date['date'] !== $today)

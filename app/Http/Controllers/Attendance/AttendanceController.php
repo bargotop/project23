@@ -68,13 +68,13 @@ class AttendanceController extends Controller
             'attendances.*.*.date' => 'required|date',
             'attendances.*.*.is_present' => 'required|boolean',
         ]);
-    
-        foreach ($request->attendances as $studentAttendances) {
-            foreach ($studentAttendances as $attendanceData) {
+
+        foreach ($request->attendances as $scheduleId => $studentAttendances) {
+            foreach ($studentAttendances as $scheduleId => $attendanceData) {
                 if ($attendanceData['date'] !== $today) {
                     continue; // Пропускаем данные не за текущую дату
                 }
-    
+
                 Attendance::updateOrCreate(
                     [
                         'student_id' => $attendanceData['student_id'],
